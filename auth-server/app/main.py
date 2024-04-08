@@ -10,7 +10,7 @@ from contextlib import asynccontextmanager
 
 
 from app.service import user_login_for_access_token, user_signup, get_gpt_token, create_access_token, get_current_user
-from app.models import UserRegister, GptToken, UserOutput, LoginResponse
+from app.models import UserRegister, GptToken, UserOutput, LoginResponse, UserRead
 from app.core.config_db import get_db, create_db_and_tables
 from app.core.utils import get_current_user_id
 
@@ -79,7 +79,10 @@ async def get_temp_code(user_id: UUID):
 
 
 # This end point will take token and return user_id
-@app.get("/api/user/me", tags=["User"])
-async def get_user_by_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
-    return user_id
+# @app.get("/api/user/me", tags=["User"])
+# async def get_user_by_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
+#     return user_id
 
+@app.get("/api/user/me")
+async def read_users(current_user: Annotated[str, Depends(get_current_user)]):
+    return current_user

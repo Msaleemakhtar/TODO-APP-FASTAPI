@@ -16,7 +16,7 @@ ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 
-outh_schema = OAuth2PasswordBearer(tokenUrl="token")
+Oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
 
@@ -38,7 +38,8 @@ credentials_exception = HTTPException(
 
 
 # get the id of current user
-async def get_current_user_id(token: str | None = Security(outh_schema)):
+async def get_current_user_id(token: str | None = Security(Oauth2_scheme)):
+  
     try:
         if not token:
             raise credentials_exception

@@ -64,7 +64,7 @@ def create_access_token(data:dict, expires_delta:Union[timedelta, None] = None):
 
 
 async def get_current_user(token: Annotated[str, Depends(Oauth2_scheme)], db:Annotated[Session, Depends(get_db)]):
-    
+    print("tken", token)
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED, 
         detail="Could not validate credentials", 
