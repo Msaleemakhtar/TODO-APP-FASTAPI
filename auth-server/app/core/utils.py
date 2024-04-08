@@ -68,17 +68,17 @@ async def validate_refresh_token(refresh_token: str)->Union[str, None]:
 
 
 # create refresh token
-async def create_refresh_token(data:dict, expires_delta:Union[timedelta, None]= None):
+def create_refresh_token(data:dict, expires_delta:Union[timedelta, None]= None):
     to_encode = data.copy()
     
     # If the Id present in date , convert it to string from uuid
-    if "id" in to_encode and isinstance(to_encode["id"], UUID):
-        to_encode["id"] = str(to_encode["id"])
+    if 'id' in to_encode and isinstance(to_encode['id'], UUID):
+        to_encode['id'] = str(to_encode['id'])
 
     if expires_delta:
-        expire = datetime.now(timezone) + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.now(timezone) + timedelta(minutes=7)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=7)
 
     to_encode.update({"exp": expire})
 

@@ -8,7 +8,7 @@ from app.models import User,UserRegister
 class InvalidUserException(Exception):
     def __init__(self, status_code:int, detail:str):
         self.status_code = status_code
-        self.details = detail
+        self.detail = detail
         super().__init__(detail)
 
 
@@ -32,7 +32,7 @@ def db_get_user(db:Session, username:Union[str, None] = None):
 
 
 
-def db_signup_user(db:Session, user_data:UserRegister):
+async def db_signup_users(db:Session, user_data:UserRegister):
 
    # If useralready exist in database
     existing_user_email_query = select(User).where(User.email == user_data.email)
@@ -45,12 +45,14 @@ def db_signup_user(db:Session, user_data:UserRegister):
     if existing_user_username:
         raise InvalidUserException(status_code=400, detail="User name already exists")
     
+
+    hashed_password = get_password_hash(user_data.password)
     # If user is not in database , add new user
     new_user = User(
         username = user_data.username,
         email = user_data.email,
         full_name = user_data.full_name,
-        hashed_password = get_password_hash(user_data.password)
+        hashed_password = hashed_password 
     )
 
     # add user in db

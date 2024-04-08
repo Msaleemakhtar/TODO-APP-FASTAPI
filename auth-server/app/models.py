@@ -52,8 +52,9 @@ class User(UserRead, table=True):
     and timestamps for creation and update.
     """
     id:UUID | None = Field(default_factory=uuid4, primary_key=True, index=True)
-    hashed_password: str = Field(default=False)
-    updated_at: datetime | None = Field(default_factory=datetime.now, sa_column_args={"onupdate": datetime.now})
+    hashed_password: str = Field(index=True)
+    email_verified: bool = Field(default=False)
+    updated_at: datetime | None = Field(default_factory=datetime.now, sa_column_kwargs={"onupdate": datetime.now})
     created_at: datetime = Field(default_factory=datetime.now)
 
 
