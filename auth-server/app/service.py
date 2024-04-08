@@ -40,7 +40,7 @@ def authenticate_user(db, username:str, password:str):
 
 # create access token
 def create_access_token(data:dict, expires_delta:Union[timedelta, None] = None):
-    print(expires_delta)
+   
    
     to_encode = data.copy()
     
@@ -97,19 +97,18 @@ async def user_login_for_access_token(form_data:Annotated[OAuth2PasswordRequestF
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
 
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        print(access_token_expires)
+       
         refresh_token_expires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
-        print(refresh_token_expires)
+   
 
         access_token = create_access_token(
             data={"sub": user.username, "id": user.id}, expires_delta=access_token_expires)
         
-        print("Access Token", access_token)
+   
 
         refresh_token = create_refresh_token(
         data={"sub": user.username, "id": user.id}, expires_delta=refresh_token_expires)
 
-        print("Refresh Token", refresh_token)
 
         return {"access_token": access_token, "token_type": "bearer", "user":user, "expires_in":int(access_token_expires.total_seconds()),  "refresh_token": refresh_token}
    except InvalidUserException as e:
