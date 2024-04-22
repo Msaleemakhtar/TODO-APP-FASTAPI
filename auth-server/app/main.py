@@ -24,7 +24,7 @@ async def create_table(app:FastAPI):
 
 app:FastAPI = FastAPI(
     lifespan=create_table,
-      title="Multi-User OAuth Server",
+      title="OAuth Server",
     description="Multi-User Todo-App OAuth_Microservice",
     version="1.0.0",
     contact={
@@ -64,9 +64,6 @@ async def token_manager_outh_flow(
 
 
 
-
-
-
 # Get the temp_code from user_id to implement Oauth for custom GPT
 @app.get("/api/oauth/get_temp_code", tags=["OAuth2 Authentication"])
 async def get_temp_code(user_id: UUID):
@@ -75,13 +72,10 @@ async def get_temp_code(user_id: UUID):
 
 
 
-
-
-
 # This end point will take token and return user_id
-# @app.get("/api/user/me", tags=["User"])
-# async def get_user_by_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
-#     return user_id
+@app.get("/api/user/me", tags=["User"])
+async def get_user_by_id(user_id: Annotated[UUID, Depends(get_current_user_id)]):
+    return user_id
 
 @app.get("/api/user/me")
 async def read_users(current_user: Annotated[str, Depends(get_current_user)]):

@@ -9,7 +9,8 @@ except FileNotFoundError:
 
 
 DB_URL = config("DB_URL", cast=Secret)
-TEST_DB_URL= config("TEST_DB_URL", cast=Secret)
+
+TEST_DB_URL = config("TEST_DB_URL", cast=Secret)
 
 SECRET_KEY = config("SECRET_KEY", cast=Secret)
 ALGORITHM = config("ALGORITHM", cast=Secret)

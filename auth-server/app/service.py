@@ -129,7 +129,7 @@ async def user_signup(user_data:UserRegister, db:Annotated[Session, Depends(get_
     
 
 
-async def get_gpt_token(grant_type:str = Form(...), refresh_token:Optional[str] = Form(None),code:Optional[str]=Form(None)):
+async def get_gpt_token(grant_type:str = Form(...), refresh_token:Optional[str] = Form(None), code:Optional[str]=Form(None)):
    
    
     if grant_type == "refresh_token":
